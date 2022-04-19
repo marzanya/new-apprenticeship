@@ -26,6 +26,27 @@ def asking():
 
 asking()
 
+# This will generate books in catagories based on rating and also, how many non-fiction or fiction book exists
+def bookreview(x):
+    if x >= 4.5:
+        return 'Books that has rating equal or more than 4.5'
+    elif x >= 4:
+        return 'Books that has rating equal or more than 4'
+    elif x >= 3.5:
+        return 'Books that has rating equal or more than 3.5'
+    elif x >= 3:
+        return 'Books that has rating equal or more than 3'
+    else:
+        return 'Books that has rating less than 3'
+def genre(x):
+    if x == 'Non Fiction':
+        return 'Non-Fiction'
+    else:
+        return  'Fiction'
+print(obj['User Rating'].apply(bookreview).value_counts().to_string())
+
+print(obj['Genre'].apply(genre).value_counts().to_string())
+
 
 # check if there are any missing values in our data
 print(obj.isnull().sum())
