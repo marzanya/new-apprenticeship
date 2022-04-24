@@ -8,7 +8,7 @@ obj = pd.read_csv('C:/Users/daesk/OneDrive/Documents/amazon.csv')
 # check if there are any missing values in our data
 print(obj.isnull().sum())
 
-# assume only customer who actually bought the book can leave review and we use that number to generate how many books actually solde. I added new colum "Total" to reflect that.
+# assume only customer who actually bought the book can leave review and we use that number to generate how many books actually sold. I added new column "Total" to reflect that.
 obj["Total"] = obj["Reviews"] * obj["Price"]
 
 # This will create loop for generating recommendation of books based on the budget and user rating
