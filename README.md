@@ -1,16 +1,18 @@
-# new-apprenticeship
-
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
 # read amazon excel file into python
-
 obj = pd.read_csv('C:/Users/daesk/OneDrive/Documents/amazon.csv')
 
+# check if there are any missing values in our data
+print(obj.isnull().sum())
 
+# assume only customer who actually bought the book can leave review and we use that number to generate how many books actually solde. I added new colum "Total" to reflect that.
+obj["Total"] = obj["Reviews"] * obj["Price"]
 
 # This will create loop for generating recommendation of books based on the budget and user rating
+
 def asking():
     budget = (input("How much money do you want to spend on? :"))
     try:
@@ -29,7 +31,7 @@ def asking():
     else:
         print("Thank you, have a nice day!")
 
-start = input("Hi, Would you like to try our book search that will create a list of recommended book based on your budge and also, user ratings?\nPress y or Y to start the program or any other key to exit. Thank you\n")
+start = input("Hi, Would you like to try our book search that will create a list of recommended book based on your budge and also, user ratings.\nPress y or Y to start the program or any other key to exit. Thank you\n")
 if start.upper() == 'Y':
     asking()
 else:
@@ -53,19 +55,15 @@ def genre(x):
         return 'Non-Fiction'
     else:
         return  'Fiction'
-print(obj['User Rating'].apply(bookreview).value_counts().to_string())
 
+print(obj['User Rating'].apply(bookreview).value_counts().to_string())
 print(obj['Genre'].apply(genre).value_counts().to_string())
 
-
-# check if there are any missing values in our data
-print(obj.isnull().sum())
-# assume only customer who actually bought the book can leave review and we use that number to
-# generate how much acutally book made. i added new colum totla to reflect that price
-obj["Total"] = obj["Reviews"] * obj["Price"]
-print(obj.sort_values(by='User Rating', ascending=False).head(5).to_string())
-
-
-s = obj.groupby(["Price", "Reviews", "Name"]).sum()
-print(s.to_string())
-
+#graph
+xs = obj["Year"].tolist()
+ys =obj["Total"].tolist()
+plt.xlabel("Year")
+plt.title("Book Sales")
+plt.ylabel("Total Sale")
+plt.bar(xs, ys, width = 0.7, color='green')
+plt.show()
