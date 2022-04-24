@@ -59,7 +59,8 @@ def genre(x):
 print(obj['User Rating'].apply(bookreview).value_counts().to_string())
 print(obj['Genre'].apply(genre).value_counts().to_string())
 
-#graph
+# graph
+
 xs = obj["Year"].tolist()
 ys =obj["Total"].tolist()
 plt.xlabel("Year")
