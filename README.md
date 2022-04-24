@@ -7,6 +7,8 @@ obj = pd.read_csv('C:/Users/daesk/OneDrive/Documents/amazon.csv')
 
 # check if there are any missing values in our data
 print(obj.isnull().sum())
+print(obj.groupby(["User Rating"]).count())
+print(obj.groupby(["Price"]).count())
 
 # assume only customer who actually bought the book can leave review and we use that number to generate how many books actually sold. I added new column "Total" to reflect that.
 obj["Total"] = obj["Reviews"] * obj["Price"]
@@ -35,10 +37,25 @@ start = input("Hi, Would you like to try our book search that will create a list
 if start.upper() == 'Y':
     asking()
 else:
-    print("Thank you, have a nice day")
+    print("Thank you, have a nice day\n") 
 
 
 # This will generate books in catagories based on rating and also, how many non-fiction or fiction book exists
+def bookprice(x):
+    if x <= 0:
+        return 'Books cost 0 or less than 20'
+    elif x <= 20:
+        return 'Books cost 20 or less than 40'
+    elif x <= 40:
+        return 'Books cost 40 or less than 60'
+    elif x <= 60:
+        return 'Books cost 60 or less than 80'
+    else:
+        return 'Books cost 80 or more'
+print(obj['Price'].apply(bookprice).value_counts().to_string())
+x = (obj['Price'].apply(bookprice).value_counts())
+x.plot(kind='pie', figsize = (8,10) , autopct='%2.f%%')
+plt.show()
 def bookreview(x):
     if x >= 4.5:
         return 'Books that has rating equal or more than 4.5'
@@ -57,14 +74,28 @@ def genre(x):
         return  'Fiction'
 
 print(obj['User Rating'].apply(bookreview).value_counts().to_string())
+x = (obj['User Rating'].apply(bookreview).value_counts())
+x.plot(kind='pie', figsize = (8,10) , autopct='%2.f%%')
+plt.show()
 print(obj['Genre'].apply(genre).value_counts().to_string())
+obj["Genre"].value_counts().plot(kind='pie', autopct='%2.f%%')
+plt.title("Genre")
+plt.show()
 
-# graph
-
+#graph
 xs = obj["Year"].tolist()
 ys =obj["Total"].tolist()
 plt.xlabel("Year")
-plt.title("Book Sales")
+plt.title("Book Sales By Years")
 plt.ylabel("Total Sale")
 plt.bar(xs, ys, width = 0.7, color='green')
 plt.show()
+xs = obj["Price"]
+ys = obj["Total"]
+plt.xlabel("Price")
+plt.title("Book Sales By Prices")
+plt.ylabel("Total Sale")
+plt.axis('auto')
+plt.bar(xs, ys, width = 0.8, color='red')
+plt.show()
+
