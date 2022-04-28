@@ -1,0 +1,6 @@
+# this one is for slashing email address
+email = input("Please, Enter your Email Address : \n").strip()
+username = email[:email.index('@')]
+print("your username is ", username)
+domain = email[email.index('@') + 1:]
+print("Your Email domain address is", domain)
